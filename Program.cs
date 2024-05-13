@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+using ConsoleTables;
 using System.Net;
+using System.Diagnostics;
 
 namespace Win7Installer
 {
@@ -9,60 +9,111 @@ namespace Win7Installer
     {
         static void Main(string[] args)
         {
-            Dictionary<string, string> programas = new Dictionary<string, string>()
-            {
-                { "Google Chrome", "https://dl.google.com//update2/installers/win_7/ChromeSetup.exe" },
-                { "Mozilla Firefox", "https://download.mozilla.org/?product=firefox-stub&os=win&lang=en-US" }
-                // Adicione mais programas e suas URLs de download conforme necessário
-            };
-
+            Console.WriteLine("Bem-vindo ao instalador estilo Ninite!");
             Console.WriteLine("Selecione os programas que deseja instalar:");
 
-            foreach (var programa in programas.Keys)
+            var programas = new string[] { "Google Chrome", "Mozilla Firefox", "Visual Studio Code", "Notepad++", "WinRAR", "VLC Media Player" };
+
+            var table = new ConsoleTable("Número", "Programa");
+            for (int i = 0; i < programas.Length; i++)
             {
-                Console.WriteLine($"[{programas.Keys.ToList().IndexOf(programa) + 1}] {programa}");
+                table.AddRow(i + 1, programas[i]);
             }
 
-            Console.WriteLine("[0] Instalar todos");
-            Console.Write("Escolha uma opção: ");
+            table.Write(Format.Minimal);
 
+            Console.WriteLine("\nSelecione os programas que deseja instalar (separados por vírgula) ou digite 'todos' para instalar todos:");
             string input = Console.ReadLine();
-            List<string> selectedPrograms = new List<string>();
 
-            if (input == "0")
+            if (input.ToLower() == "todos")
             {
-                selectedPrograms.AddRange(programas.Keys);
+                InstalarTodos(programas);
             }
             else
             {
-                int choice;
-                if (int.TryParse(input, out choice) && choice >= 1 && choice <= programas.Count)
+                string[] selecao = input.Split(',');
+                InstalarSelecao(programas, selecao);
+            }
+
+            Console.WriteLine("Instalação concluída! Pressione qualquer tecla para sair.");
+            Console.ReadKey();
+        }
+
+        static void InstalarTodos(string[] programas)
+        {
+            foreach (var programa in programas)
+            {
+                Instalar(programa);
+            }
+        }
+
+        static void InstalarSelecao(string[] programas, string[] selecao)
+        {
+            foreach (var item in selecao)
+            {
+                int index;
+                if (int.TryParse(item.Trim(), out index) && index > 0 && index <= programas.Length)
                 {
-                    selectedPrograms.Add(programas.Keys.ElementAt(choice - 1));
+                    Instalar(programas[index - 1]);
                 }
-                else
+            }
+        }
+
+        static void Instalar(string programa)
+        {
+            string url;
+            switch (programa.ToLower())
+            {
+                case "google chrome":
+                    url = "https://dl.google.com//update2/installers/win_7/ChromeSetup.exe";
+                    break;
+                case "mozilla firefox":
+                    url = "https://download.mozilla.org/?product=firefox-stub&os=win&lang=en-US";
+                    break;
+                case "visual studio code":
+                    url = "https://aka.ms/win32-x64-user-stable";
+                    break;
+                case "notepad++":
+                    url = "https://notepad-plus-plus.org/repository/8.x/8.3.1/npp.8.3.1.Installer.exe";
+                    break;
+                case "winrar":
+                    url = "https://www.win-rar.com/fileadmin/winrar-versions/winrar/winrar-x64-602pt-br.exe";
+                    break;
+                case "vlc media player":
+                    url = "https://www.videolan.org/vlc/download-win.html";
+                    break;
+                default:
+                    Console.WriteLine($"O programa '{programa}' não é suportado.");
+                    return;
+            }
+
+            string fileName = Path.GetFileName(url);
+            string destinationPath = Path.Combine(Path.GetTempPath(), fileName);
+
+            using (var webClient = new WebClient())
+            {
+                try
                 {
-                    Console.WriteLine("Opção inválida!");
+                    Console.WriteLine($"Baixando {programa}...");
+                    webClient.DownloadFile(url, destinationPath);
+                    Console.WriteLine($"{programa} baixado com sucesso.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erro ao baixar {programa}: {ex.Message}");
                     return;
                 }
             }
 
-            foreach (string program in selectedPrograms)
+            try
             {
-                if (programas.ContainsKey(program))
-                {
-                    string url = programas[program];
-                    string fileName = url.Substring(url.LastIndexOf('/') + 1);
-                    string destinationPath = AppDomain.CurrentDomain.BaseDirectory + fileName;
-
-                    WebClient webClient = new WebClient();
-                    Console.WriteLine($"Baixando {program}...");
-                    webClient.DownloadFile(url, destinationPath);
-                    Console.WriteLine($"{program} baixado com sucesso.");
-
-                    Console.WriteLine($"Instalando {program}...");
-                    Process.Start(destinationPath);
-                }
+                Console.WriteLine($"Instalando {programa}...");
+                Process.Start(destinationPath);
+                Console.WriteLine($"{programa} instalado com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao instalar {programa}: {ex.Message}");
             }
         }
     }
