@@ -1,22 +1,69 @@
 ﻿using System;
-using System.Net;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 
-class Program
+namespace Win7Installer
 {
-    static void Main(string[] args)
+    class Program
     {
-        string url = "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user";
-        string destinationPath = "arquivo.exe";
+        static void Main(string[] args)
+        {
+            Dictionary<string, string> programas = new Dictionary<string, string>()
+            {
+                { "Google Chrome", "https://dl.google.com//update2/installers/win_7/ChromeSetup.exe" },
+                { "Mozilla Firefox", "https://download.mozilla.org/?product=firefox-stub&os=win&lang=en-US" }
+                // Adicione mais programas e suas URLs de download conforme necessário
+            };
 
-        // Baixar o arquivo da URL especificada
-        WebClient webClient = new WebClient();
-        Console.WriteLine("Baixando arquivo...");
-        webClient.DownloadFile(url, destinationPath);
-        Console.WriteLine("Arquivo baixado com sucesso.");
+            Console.WriteLine("Selecione os programas que deseja instalar:");
 
-        // Executar o arquivo
-        Console.WriteLine("Executando arquivo...");
-        Process.Start(destinationPath);
+            foreach (var programa in programas.Keys)
+            {
+                Console.WriteLine($"[{programas.Keys.ToList().IndexOf(programa) + 1}] {programa}");
+            }
+
+            Console.WriteLine("[0] Instalar todos");
+            Console.Write("Escolha uma opção: ");
+
+            string input = Console.ReadLine();
+            List<string> selectedPrograms = new List<string>();
+
+            if (input == "0")
+            {
+                selectedPrograms.AddRange(programas.Keys);
+            }
+            else
+            {
+                int choice;
+                if (int.TryParse(input, out choice) && choice >= 1 && choice <= programas.Count)
+                {
+                    selectedPrograms.Add(programas.Keys.ElementAt(choice - 1));
+                }
+                else
+                {
+                    Console.WriteLine("Opção inválida!");
+                    return;
+                }
+            }
+
+            foreach (string program in selectedPrograms)
+            {
+                if (programas.ContainsKey(program))
+                {
+                    string url = programas[program];
+                    string fileName = url.Substring(url.LastIndexOf('/') + 1);
+                    string destinationPath = AppDomain.CurrentDomain.BaseDirectory + fileName;
+
+                    WebClient webClient = new WebClient();
+                    Console.WriteLine($"Baixando {program}...");
+                    webClient.DownloadFile(url, destinationPath);
+                    Console.WriteLine($"{program} baixado com sucesso.");
+
+                    Console.WriteLine($"Instalando {program}...");
+                    Process.Start(destinationPath);
+                }
+            }
+        }
     }
 }
