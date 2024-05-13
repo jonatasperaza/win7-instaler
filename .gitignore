@@ -1,0 +1,32 @@
+# Pastas de compilação
+bin/
+obj/
+
+# Arquivos de configuração do Visual Studio Code
+.vscode/
+
+# Arquivos de configuração específicos do usuário
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Arquivos de log
+*.log
+
+# Dependências e pacotes
+packages/
+*.dll
+*.exe
+
+# Arquivos temporários
+*.tmp
+
+# Arquivos de cache
+*.cache
+
+# Arquivos de nuvem de compilação
+*.userprefs
+
+# Arquivos de configuração do .NET Core
+*.dotnet/*
