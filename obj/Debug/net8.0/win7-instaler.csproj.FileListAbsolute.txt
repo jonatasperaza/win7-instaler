@@ -1,0 +1,14 @@
+C:\Users\User\OneDrive\Documentos\win7-instaler\bin\Debug\net8.0\win7-instaler.exe
+C:\Users\User\OneDrive\Documentos\win7-instaler\bin\Debug\net8.0\win7-instaler.deps.json
+C:\Users\User\OneDrive\Documentos\win7-instaler\bin\Debug\net8.0\win7-instaler.runtimeconfig.json
+C:\Users\User\OneDrive\Documentos\win7-instaler\bin\Debug\net8.0\win7-instaler.dll
+C:\Users\User\OneDrive\Documentos\win7-instaler\bin\Debug\net8.0\win7-instaler.pdb
+C:\Users\User\OneDrive\Documentos\win7-instaler\obj\Debug\net8.0\win7-instaler.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\OneDrive\Documentos\win7-instaler\obj\Debug\net8.0\win7-instaler.AssemblyInfoInputs.cache
+C:\Users\User\OneDrive\Documentos\win7-instaler\obj\Debug\net8.0\win7-instaler.AssemblyInfo.cs
+C:\Users\User\OneDrive\Documentos\win7-instaler\obj\Debug\net8.0\win7-instaler.csproj.CoreCompileInputs.cache
+C:\Users\User\OneDrive\Documentos\win7-instaler\obj\Debug\net8.0\win7-instaler.dll
+C:\Users\User\OneDrive\Documentos\win7-instaler\obj\Debug\net8.0\refint\win7-instaler.dll
+C:\Users\User\OneDrive\Documentos\win7-instaler\obj\Debug\net8.0\win7-instaler.pdb
+C:\Users\User\OneDrive\Documentos\win7-instaler\obj\Debug\net8.0\win7-instaler.genruntimeconfig.cache
+C:\Users\User\OneDrive\Documentos\win7-instaler\obj\Debug\net8.0\ref\win7-instaler.dll

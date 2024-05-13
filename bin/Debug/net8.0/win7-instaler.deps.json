@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "win7-instaler/1.0.0": {
+        "runtime": {
+          "win7-instaler.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "win7-instaler/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
